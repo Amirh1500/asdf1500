@@ -2,15 +2,17 @@
 
 void Background::paint_back_ground()
 {
+    sf::Clock movementClock; 
+    float zombieX = 950;      
+    float zombieSpeed = 0.5f;
     Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("photo/background.png"))
     {
-        cerr << "Error loading background image!" << std::endl;
+        cerr << "Error loading background image!" << endl;
         return;
     }
     Sprite backgroundSprite(backgroundTexture);
-    RenderWindow window(sf::VideoMode(1035, 600), "My Game");
-
+    RenderWindow window(VideoMode(1035, 600), "My Game");
     while (window.isOpen())
     {
         Event event;
@@ -21,8 +23,21 @@ void Background::paint_back_ground()
                 window.close();
             }
         }
-
         window.draw(backgroundSprite);
+        Texture zombieTexture;
+        if (!zombieTexture.loadFromFile("photo/zombie/image1.png"))
+        {
+            cerr << "Error loading zombie image!" << endl;
+            return;
+        }
+
+        Sprite zombieSprite(zombieTexture);
+        zombieSprite.setScale(0.35f, 0.35f);
+        zombieX -= zombieSpeed; 
+        movementClock.restart(); 
+        zombieSprite.setPosition(zombieX, 260); 
+        window.draw(zombieSprite);
+
         for (const Zombies &zombie : zombie_list)
         {
         }
