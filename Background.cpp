@@ -2,9 +2,7 @@
 
 void Background::paint_back_ground()
 {
-    sf::Clock movementClock; 
-    float zombieX = 950;      
-    float zombieSpeed = 0.5f;
+
     Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("photo/background.png"))
     {
@@ -13,6 +11,26 @@ void Background::paint_back_ground()
     }
     Sprite backgroundSprite(backgroundTexture);
     RenderWindow window(VideoMode(1035, 600), "My Game");
+    float zombieX = 950;
+    vector<float> yPositions = {5.0f,
+                                80.0f,
+                                180.0f,
+                                270.0f,
+                                380.0f};
+    float randomY = yPositions[rand() % yPositions.size()];
+    Clock movementClock;
+    float zombieSpeed = 0.1f;
+    vector<Texture> zombieTextures;
+    for (int i = 1; i <= 19; ++i)
+    {
+        Texture texture;
+        if (!texture.loadFromFile("photo/zombie/image" + to_string(i) + ".png"))
+        {
+            cerr << "Error loading zombie image " << i << "!" << endl;
+            return;
+        }
+        zombieTextures.push_back(texture);
+    }
     while (window.isOpen())
     {
         Event event;
@@ -24,31 +42,25 @@ void Background::paint_back_ground()
             }
         }
         window.draw(backgroundSprite);
-        Texture zombieTexture;
-        if (!zombieTexture.loadFromFile("photo/zombie/image1.png"))
-        {
-            cerr << "Error loading zombie image!" << endl;
-            return;
-        }
-
-        Sprite zombieSprite(zombieTexture);
-        zombieSprite.setScale(0.35f, 0.35f);
-        zombieX -= zombieSpeed; 
-        movementClock.restart(); 
-        zombieSprite.setPosition(zombieX, 260); 
-        window.draw(zombieSprite);
 
         for (const Zombies &zombie : zombie_list)
         {
         }
 
+        Sprite zombieSprite(zombieTextures[static_cast<int>(movementClock.getElapsedTime().asMilliseconds() / 100) % 19]);
+        zombieSprite.setPosition(zombieX, 80);
+        zombieSprite.setScale(0.35f, 0.35f);
+        zombieX -= zombieSpeed;
+        window.draw(zombieSprite);
         window.display();
     }
 }
 
 void Background::add_zombie() {
-    /*zombie_list.push_back(new zombie());*/
-};
+
+}
+
+;
 int Background::play()
 {
     paint_back_ground();

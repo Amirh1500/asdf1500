@@ -3,7 +3,7 @@
 
 int main() {
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(400, 600), "SFML Animation");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Animation");
 
     // Load images into textures
     std::vector<sf::Texture> textures(19);

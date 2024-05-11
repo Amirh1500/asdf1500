@@ -10,7 +10,6 @@ public:
     void paint_back_ground();
 
 private:
-    int xlen, ylen;
-    string image_file_name;
+
     vector<Zombies> zombie_list;
 };
