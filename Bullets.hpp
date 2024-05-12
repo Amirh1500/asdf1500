@@ -5,4 +5,5 @@
 class Bullets : public Moveable
 {
 public:
+Bullets();
 };

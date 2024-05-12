@@ -1,9 +1,10 @@
 #include "Object.hpp"
 
-Object::Object(int xi, int yi, int xl, int yl, string f1, string f2, string f3, string f4, string f5)
+int  Object::next_frame()
 {
-    current_frame = 0;
-};
+    return (movementClock.getElapsedTime().asMilliseconds() / 100) % num_of_frames;
+}
+
 void Object::paint() {
 
 };

@@ -3,7 +3,7 @@
 #include "Static.hpp"
 #include "global.hpp"
 
-class Shooter : public Static
+class Greenplants : public Static
 {
 public:
 };

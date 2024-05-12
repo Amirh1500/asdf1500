@@ -1,6 +1,7 @@
-#include "Object.hpp"
+#include "Moveable.hpp"
 
-/*void Movable::Move()
+void Moveable::Move()
 {
-    x += step;
-};*/
+    X -= Speed;
+};
+

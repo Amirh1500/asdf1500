@@ -5,5 +5,5 @@
 class Zombies : public Moveable
 {
 public:
-    Zombies(int x, int y, int damage_power);
+    Zombies();
 };
