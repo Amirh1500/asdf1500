@@ -2,7 +2,7 @@
 #include "global.hpp"
 #include "Zombies.hpp"
 
-class Background
+class Maingame
 {
 public:
     int play();

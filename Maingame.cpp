@@ -1,6 +1,6 @@
-#include "Background.hpp"
+#include "Maingame.hpp"
 
-void Background::paint_back_ground()
+void Maingame::paint_back_ground()
 {
 
     Texture backgroundTexture;
@@ -56,12 +56,12 @@ void Background::paint_back_ground()
     }
 }
 
-void Background::add_zombie() {
+void Maingame::add_zombie() {
 
 }
 
 ;
-int Background::play()
+int Maingame::play()
 {
     paint_back_ground();
 
