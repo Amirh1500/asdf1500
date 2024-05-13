@@ -2,12 +2,10 @@
 void Background::pressed_mouse()
 {
     Vector2f mousePosFloat = Vector2f(Mouse::getPosition(window));
-    lastMousePos = mousePosFloat;
     for (Greenplants *g : greenplants_list)
     {
         if (g->globalbound().contains(mousePosFloat))
         {
-            cout << "Plant clicked!" << endl;
             isDragging = true;
             draggedPlant = g;
             break;
@@ -19,11 +17,10 @@ void Background::released_mouse()
 {
     if (isDragging && draggedPlant)
     {
-        Vector2f currentMousePos = Vector2f(Mouse::getPosition(window));
-        Vector2f delta = currentMousePos - lastMousePos;
+        Vector2i currentMousePos = Mouse::getPosition(window);
+        Vector2i delta = currentMousePos - lastMousePos;
         draggedPlant->X += delta.x;
         draggedPlant->Y += delta.y;
-        lastMousePos = currentMousePos;
         isDragging = false;
     }
 }
@@ -59,15 +56,8 @@ void Background::play()
             }
             else if (event.type == Event::MouseMoved)
             {
-                lastMousePos = Vector2f(Mouse::getPosition(window));
-                if (isDragging && draggedPlant) // Add this block
-                {
-                    Vector2f delta = lastMousePos - Vector2f(draggedPlant->X, draggedPlant->Y);
-                    draggedPlant->X += delta.x;
-                    draggedPlant->Y += delta.y;
-                }
+                 lastMousePos = Mouse::getPosition(window);
             }
-
             else if (event.type == Event::MouseButtonPressed)
             {
                 pressed_mouse();

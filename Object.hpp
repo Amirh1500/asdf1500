@@ -3,11 +3,8 @@
 class Object
 {
 public:
-    Object()
-    {
-
-    };
-    sf::Clock movementClock;
+    Object();
+    Clock movementClock;
     int num_of_frames;
     int next_frame();
     void paint();
