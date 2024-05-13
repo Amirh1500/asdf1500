@@ -16,5 +16,5 @@ private:
     vector<Greenplants> greenplants_list;
     vector<Bullets> bullets_list;
     vector<Zombies> zombie_list;
-    // vector<Potatos> bullets_list;
+    vector<Potatos> bullets_list;
 };
