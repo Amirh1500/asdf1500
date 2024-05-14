@@ -140,3 +140,17 @@ bool Background::should_add_sun()
         return true;
     return false;
 }
+
+    int Background::music(){
+      sf::Music music;
+    if (!music.openFromFile("music/Music.ogg")) {
+        
+        return -1;
+    }
+
+    music.setVolume(100); 
+    music.setLoop(true);
+    music.play();
+    return 0;
+
+    }

@@ -20,6 +20,7 @@ class Background
 {
 public:
     void play();
+    int music();
 
 private:
     State game_state;
