@@ -7,7 +7,7 @@ void Background::pressed_mouse()
     {
         if (g->globalbound().contains(mousePosFloat))
         {
-            cout << "Plant clicked!" << endl;
+
             isDragging = true;
             draggedPlant = g;
             break;
@@ -78,17 +78,21 @@ void Background::play()
             }
         }
         window.draw(backgroundSprite);
-        // HWERE you should check mouse click
-        // bool add_greenplants = should_add_zombie();
 
-        // if (add_greenplants)
-        // {
-        //     Greenplants *g = new Greenplants();
-        //     g->X = 0;
-        //     g->Y = 80;
-        //     greenplants_list.push_back(g);
-        // }
+        if (should_add_sun())
+        {
+            Sun *s = new Sun();
+            sun_list.push_back(s);
+        }
 
+        for (Sun *s : sun_list)
+        {
+            Sprite sunSprite(s->obj_Textures[0]);
+            sunSprite.setPosition(s->X, s->Y);
+            sunSprite.setScale(s->Xlen, s->Ylen);
+            s->MoveY();
+            window.draw(sunSprite);
+        }
         // add new zombie by 0.5% chance
         if (should_add_zombie())
         {
@@ -102,7 +106,7 @@ void Background::play()
             Sprite zombieSprite(z->obj_Textures[z->next_frame()]);
             zombieSprite.setPosition(z->X, z->Y);
             zombieSprite.setScale(z->Xlen, z->Ylen);
-            z->Move();
+            z->MoveX();
             if (z->X < 190)
             {
                 // delete z;
@@ -115,43 +119,22 @@ void Background::play()
         {
             Sprite geSprite(g->obj_Textures[g->next_frame()]);
             geSprite.setPosition(g->X, g->Y);
-            geSprite.setScale(0.025f, 0.025f);
+            geSprite.setScale(0.02f, 0.02f);
             window.draw(geSprite);
         }
-
-        // DRAW Greenpants)
-
-        // for (Greenplants *g : greenplants_list)
-        // {
-        //     Sprite greenplantsSprite(g->obj_Textures[g->next_frame()]);
-        //     greenplantsSprite.setPosition(g->X, g->Y);
-        //     greenplantsSprite.setScale(g->Xlen, g->Ylen);
-        //     window.draw(greenplantsSprite);
-        // }
 
         window.display();
     }
 }
-// GLOBALBOUND.CONTAINS
-void Background::mouse_handler()
-{
-    Event event;
-    switch (event.type)
-    {
-    case Event::Closed:
-        window.close();
-        game_state = EXIT;
-        break;
-    case Event::MouseButtonPressed:
-        break;
-    case Event::MouseButtonReleased:
-        break;
-    case Event::MouseMoved:
-        break;
-    }
-}
 
 bool Background::should_add_zombie()
+{
+    if ((((float)((float)rand() / RAND_MAX)) * 1000) > 996)
+        return true;
+    return false;
+}
+
+bool Background::should_add_sun()
 {
     if ((((float)((float)rand() / RAND_MAX)) * 1000) > 995)
         return true;

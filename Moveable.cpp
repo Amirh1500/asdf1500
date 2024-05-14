@@ -1,7 +1,11 @@
 #include "Moveable.hpp"
 
-void Moveable::Move()
+void Moveable::MoveX()
 {
     X -= Speed;
 };
 
+void Moveable::MoveY()
+{
+    Y += Speed;
+}

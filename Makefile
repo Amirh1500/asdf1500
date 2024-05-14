@@ -1,8 +1,8 @@
 CXX = g++
 CXXFLAGS = -std=c++20
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
-SOURCES = main.cpp Object.cpp Moveable.cpp Zombies.cpp Bullets.cpp Static.cpp Sunflowers.cpp Potatos.cpp Greenplants.cpp Background.cpp
-HEADERS = Object.hpp Moveable.hpp Zombies.hpp Bullets.hpp Static.hpp Sunflowers.hpp Potatos.hpp Greenplants.hpp Background.hpp global.hpp
+SOURCES = main.cpp Object.cpp Moveable.cpp Zombies.cpp Sun.cpp Bullets.cpp Static.cpp Sunflowers.cpp Potatos.cpp Greenplants.cpp Background.cpp
+HEADERS = Object.hpp Moveable.hpp Zombies.hpp Sun.hpp Bullets.hpp Static.hpp Sunflowers.hpp Potatos.hpp Greenplants.hpp Background.hpp global.hpp
 OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = pvz.out
 

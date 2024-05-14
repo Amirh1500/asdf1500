@@ -10,7 +10,8 @@ public:
     Moveable(){
 
     };
-    void Move();
+    void MoveX();
+    void MoveY();
     float Speed;
 private:
     int step; // zombie = -1 , bullet = +1

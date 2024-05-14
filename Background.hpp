@@ -4,6 +4,7 @@
 #include "Greenplants.hpp"
 #include "Potatos.hpp"
 #include "Bullets.hpp"
+#include "Sun.hpp"
 
 enum State
 {
@@ -23,6 +24,7 @@ public:
 private:
     State game_state;
     bool should_add_zombie();
+    bool should_add_sun();
     void mouse_handler();
     void pressed_mouse();
     void released_mouse();
@@ -35,4 +37,5 @@ private:
     // vector<Bullets *> bullets_list;
     vector<Zombies *> zombie_list;
     // vector<Potatos *> bullets_list;
+    vector<Sun *> sun_list;
 };
