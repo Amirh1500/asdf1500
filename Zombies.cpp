@@ -24,6 +24,7 @@ Zombies::Zombies()
         }
         obj_Textures.push_back(texture);
     }
-
+    obj_Sprite.setTexture(obj_Textures[0]);
+    obj_Sprite.setScale(Xlen,Ylen);
 
 }

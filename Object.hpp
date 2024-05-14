@@ -1,5 +1,6 @@
 #pragma once
 #include "global.hpp"
+
 class Object
 {
 public:
@@ -9,8 +10,10 @@ public:
     int next_frame();
     void paint();
     void clear();
-    vector<Texture> obj_Textures;
+    bool is_in_Rect(int x, int y);
 
+    vector<Texture> obj_Textures;
+    Sprite          obj_Sprite;
     int lifescore;
     float X;
     float Y;

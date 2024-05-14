@@ -6,9 +6,8 @@
 class Greenplants : public Static
 {
 public:
-   Greenplants();
-    FloatRect globalbound();
+    Greenplants();
+
 private:
-Texture greenplanttex;
-Sprite greenplantsp;
+
 };

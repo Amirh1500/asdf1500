@@ -9,7 +9,7 @@ Sun::Sun()
                                 470.0f,
                                 780.0f};
     X = xPositions[rand() % xPositions.size()];
-    // num_of_frames = 19;
+    num_of_frames = 1;
     Xlen = 1.0f;
     Ylen = 1.0f;
     Speed = 0.5f;
@@ -23,4 +23,11 @@ Sun::Sun()
         }
         obj_Textures.push_back(texture);
     }
+     obj_Sprite.setTexture(obj_Textures[0]);
+    obj_Sprite.setScale(Xlen,Ylen);
 }
+
+// FloatRect Sun::globalbound()
+// {
+//     return Sunsp.getGlobalBounds();
+// }

@@ -20,18 +20,20 @@ class Background
 {
 public:
     void play();
-    int music();
+    
 
 private:
     State game_state;
+    Music music;
     bool should_add_zombie();
     bool should_add_sun();
     void mouse_handler();
     void pressed_mouse();
     void released_mouse();
-    void add_greenplants();
+    Greenplants logo_greenPlan;
+    Greenplants * add_greenplants();
     bool isDragging = false;
-    Vector2f lastMousePos;
+    Vector2i lastMousePos;
     Greenplants *draggedPlant = nullptr;
     RenderWindow window;
     vector<Greenplants *> greenplants_list;

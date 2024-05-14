@@ -5,4 +5,5 @@ class Sun : public Moveable
 {
 public:
     Sun();
+private:
 };
