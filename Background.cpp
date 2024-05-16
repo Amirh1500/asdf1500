@@ -13,19 +13,18 @@ void Background::pressed_mouse()
     //         break;
     //     }
     // }
-    if(logo_greenPlan.is_in_Rect(mousePosFloat.x, mousePosFloat.y))
+    if (logo_greenPlan.is_in_Rect(mousePosFloat.x, mousePosFloat.y))
     {
-        //add new green Plan
-       draggedPlant  = add_greenplants();
+        // add new green Plan
+        draggedPlant = add_greenplants();
         isDragging = true;
-
     }
     for (Sun *s : sun_list)
     {
-        if( s->is_in_Rect(mousePosFloat.x,mousePosFloat.y))
+        if (s->is_in_Rect(mousePosFloat.x, mousePosFloat.y))
         {
             sun_list.erase(find(sun_list.begin(), sun_list.end(), s));
-            delete(s);
+            delete (s);
         }
     }
 }
@@ -69,6 +68,15 @@ void Background::play()
     logo_greenPlan.Y = 0;
 
     bool GameOver = false;
+    if (!music.openFromFile("music/Music.ogg"))
+    {
+        cout << "faild to load music" << endl;
+    }
+
+    music.setVolume(50);
+    music.setLoop(true);
+    music.play();
+    // music.stop();
     while (window.isOpen() && (!GameOver))
     {
         Event event;
@@ -87,8 +95,8 @@ void Background::play()
                     draggedPlant->X += delta.x;
                     draggedPlant->Y += delta.y;
                 }
-                // }else
-                // if( isDragging && draggedSun) // Add this block
+                
+                // else if( isDragging && draggedSun) // Add this block
                 // {
 
                 // }else
@@ -111,7 +119,7 @@ void Background::play()
             Sun *s = new Sun();
             sun_list.push_back(s);
         }
-        
+
         for (Sun *s : sun_list)
         {
             s->next_frame();
@@ -131,7 +139,6 @@ void Background::play()
         {
             z->next_frame();
             z->obj_Sprite.setPosition(z->X, z->Y);
-            //           zombieSprite.setScale(z->Xlen, z->Ylen);
             z->MoveX();
             if (z->X < 190)
             {
@@ -147,24 +154,17 @@ void Background::play()
             g->obj_Sprite.setPosition(g->X, g->Y);
             window.draw(g->obj_Sprite);
         }
-        if (!music.openFromFile("music/Music.ogg"))
-        {
-            cout << "faild to load music" << endl;
-        }
 
-        music.setVolume(100);
-        music.setLoop(true);
-        music.play();
-        music.stop();
         window.display();
     }
+    music.stop();
     // show gameover message
 }
 
 bool Background::should_add_zombie()
 {
     if ((((float)((float)rand() / RAND_MAX)) * 1000) > 996)
-        return false;
+        return true;
     return false;
 }
 
@@ -174,9 +174,3 @@ bool Background::should_add_sun()
         return true;
     return false;
 }
-
-// void Background::music()
-// {
-//     sf::Music music;
-
-// }
