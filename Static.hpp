@@ -5,6 +5,6 @@
 class Static : public Object
 {
 public:
-private:
+protected:
     int price;
 };

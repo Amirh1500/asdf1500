@@ -4,15 +4,15 @@ Zombies::Zombies()
 {
  
     X = 950;
-    vector<float> yPositions = {5.0f,
-                                80.0f,
-                                180.0f,
-                                270.0f,
-                                380.0f};
+    vector<float> yPositions = {8.0f,
+                                88.0f,
+                                198.0f,
+                                288.0f,
+                                398.0f};
     Y = yPositions[rand() % yPositions.size()];
     num_of_frames = 19;
-    Xlen = 0.35f;
-    Ylen = 0.35f;
+    Xlen = 0.3f;
+    Ylen = 0.3f;
     Speed = 0.5f;
     for (int i = 1; i <= num_of_frames; ++i)
     {

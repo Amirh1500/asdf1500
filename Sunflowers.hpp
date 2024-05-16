@@ -5,4 +5,5 @@
 class Sunflowers : public Static
 {
 public:
+    Sunflowers();
 };

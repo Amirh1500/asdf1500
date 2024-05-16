@@ -5,4 +5,5 @@
 class Potatos : public Static
 {
 public:
+    Potatos();
 };

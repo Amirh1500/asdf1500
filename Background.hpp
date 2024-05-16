@@ -5,6 +5,7 @@
 #include "Potatos.hpp"
 #include "Bullets.hpp"
 #include "Sun.hpp"
+#include "Sunflowers.hpp"
 
 enum State
 {
@@ -20,7 +21,8 @@ class Background
 {
 public:
     void play();
-    
+    Background();
+    int total = 0;
 
 private:
     State game_state;
@@ -30,15 +32,24 @@ private:
     void mouse_handler();
     void pressed_mouse();
     void released_mouse();
-    Greenplants logo_greenPlan;
-    Greenplants * add_greenplants();
+    void logosunflower();
+    void logogreenplant();
+    void logopotato();
+    void show_sun();
+    Greenplants *logo_greenPlan;
+    Sunflowers *logo_sunflower;
+    Potatos *logo_potato;
+    Greenplants *add_greenplants();
+    Sunflowers *add_sunflowers();
+    Potatos *add_potatos();
     bool isDragging = false;
     Vector2i lastMousePos;
-    Greenplants *draggedPlant = nullptr;
+    Static *draggedPlant = nullptr;
     RenderWindow window;
     vector<Greenplants *> greenplants_list;
     // vector<Bullets *> bullets_list;
     vector<Zombies *> zombie_list;
-    // vector<Potatos *> bullets_list;
     vector<Sun *> sun_list;
+    vector<Sunflowers *> sunflowers_list;
+    vector<Potatos *> potato_list;
 };
