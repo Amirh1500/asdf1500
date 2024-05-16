@@ -20,6 +20,7 @@ enum State
 class Background
 {
 public:
+    int Quantize(int y);
     void play();
     Background();
     int total = 0;
@@ -47,7 +48,7 @@ private:
     Static *draggedPlant = nullptr;
     RenderWindow window;
     vector<Greenplants *> greenplants_list;
-    // vector<Bullets *> bullets_list;
+    vector<Bullets *> bullets_list;
     vector<Zombies *> zombie_list;
     vector<Sun *> sun_list;
     vector<Sunflowers *> sunflowers_list;

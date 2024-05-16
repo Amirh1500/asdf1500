@@ -2,6 +2,20 @@
 Background::Background()
 {
 }
+
+int Background::Quantize(int y)
+{
+    if (y < 165)
+        return 75;
+    if (y < 260)
+        return 165;
+    if (y < 350)
+        return 260;
+    if (y < 440)
+        return 350;
+    return 440;
+}
+
 void Background::pressed_mouse()
 {
     Vector2i mousePosFloat = Vector2i(Mouse::getPosition(window));
@@ -9,20 +23,28 @@ void Background::pressed_mouse()
 
     if (logo_greenPlan->is_in_Rect(mousePosFloat.x, mousePosFloat.y))
     {
-
         draggedPlant = add_greenplants();
-        isDragging = true;
+        if (draggedPlant)
+            isDragging = true;
+        else
+            isDragging = false;
     }
     if (logo_sunflower->is_in_Rect(mousePosFloat.x, mousePosFloat.y))
-    {
 
+    {
         draggedPlant = add_sunflowers();
-        isDragging = true;
+        if (draggedPlant)
+            isDragging = true;
+        else
+            isDragging = false;
     }
     if (logo_potato->is_in_Rect(mousePosFloat.x, mousePosFloat.y))
     {
         draggedPlant = add_potatos();
-        isDragging = true;
+        if (draggedPlant)
+            isDragging = true;
+        else
+            isDragging = false;
     }
 
     for (Sun *s : sun_list)
@@ -44,7 +66,8 @@ void Background::show_sun()
     text.setFont(font);
     text.setString(to_string(total));
     text.setCharacterSize(30);
-    text.setColor(Color::Black);
+    const sf::Color c = Color::Black;
+    text.setColor(c);
     text.setPosition(280.0f, 13.0f);
     window.draw(text);
 }
@@ -73,6 +96,7 @@ Greenplants *Background::add_greenplants()
         total -= 100;
         return g;
     }
+    return NULL;
 }
 
 Sunflowers *Background::add_sunflowers()
@@ -86,6 +110,7 @@ Sunflowers *Background::add_sunflowers()
         total -= 50;
         return sf;
     }
+    return NULL;
 }
 
 Potatos *Background::add_potatos()
@@ -99,6 +124,7 @@ Potatos *Background::add_potatos()
         total -= 50;
         return p;
     }
+    return NULL;
 }
 
 void Background::logosunflower()
@@ -106,7 +132,9 @@ void Background::logosunflower()
     logo_sunflower = new Sunflowers();
     logo_sunflower->X = 0;
     logo_sunflower->Y = 100;
-    sunflowers_list.push_back(logo_sunflower);
+    logo_sunflower->obj_Sprite.setPosition(logo_sunflower->X, logo_sunflower->Y);
+
+    // sunflowers_list.push_back(logo_sunflower);
 }
 
 void Background::logogreenplant()
@@ -114,7 +142,9 @@ void Background::logogreenplant()
     logo_greenPlan = new Greenplants();
     logo_greenPlan->X = 0;
     logo_greenPlan->Y = 5;
-    greenplants_list.push_back(logo_greenPlan);
+    logo_greenPlan->obj_Sprite.setPosition(logo_greenPlan->X, logo_greenPlan->Y);
+
+    // greenplants_list.push_back(logo_greenPlan);
 }
 
 void Background::logopotato()
@@ -122,7 +152,9 @@ void Background::logopotato()
     logo_potato = new Potatos();
     logo_potato->X = 0;
     logo_potato->Y = 180;
-    potato_list.push_back(logo_potato);
+    logo_potato->obj_Sprite.setPosition(logo_potato->X, logo_potato->Y);
+
+    //   potato_list.push_back(logo_potato);
 }
 
 void Background::play()
@@ -130,6 +162,14 @@ void Background::play()
     logogreenplant();
     logosunflower();
     logopotato();
+
+    // just for test plant
+    Greenplants *test_plant = new Greenplants();
+    test_plant->Y = 75;
+    test_plant->X = 190;
+
+    greenplants_list.push_back(test_plant);
+
     Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("photo/BackgroundOrginal.png"))
     {
@@ -150,9 +190,12 @@ void Background::play()
     music.setVolume(100);
     music.setLoop(true);
     music.play();
-    music.stop();
     while (window.isOpen() && (!GameOver))
     {
+        window.draw(backgroundSprite);
+        window.draw(logo_sunflower->obj_Sprite);
+        window.draw(logo_potato->obj_Sprite);
+        window.draw(logo_greenPlan->obj_Sprite);
         Event event;
         while (window.pollEvent(event))
         {
@@ -163,12 +206,14 @@ void Background::play()
             }
             else if (event.type == Event::MouseMoved)
             {
+
                 lastMousePos = Vector2i(Mouse::getPosition(window));
                 if (isDragging && draggedPlant)
                 {
                     Vector2i delta = lastMousePos - Vector2i(draggedPlant->X, draggedPlant->Y);
                     draggedPlant->X += delta.x;
                     draggedPlant->Y += delta.y;
+                    draggedPlant->Y = Quantize(draggedPlant->Y);
                 }
             }
 
@@ -181,11 +226,42 @@ void Background::play()
                 released_mouse();
             }
         }
-        window.draw(backgroundSprite);
-        window.draw(logo_greenPlan->obj_Sprite);
-        window.draw(logo_sunflower->obj_Sprite);
-        window.draw(logo_potato->obj_Sprite);
 
+        // check if Greenplant if infront of zombi
+        if ((rand() % 1000) > 995)
+        {
+            for (Greenplants *g : greenplants_list)
+                for (Zombies *z : zombie_list)
+                {
+                    if (g->Y == (z->Y + 67))
+                    {
+                        Bullets *b = new Bullets();
+                        b->X = g->X + 20;
+                        b->Y = g->Y + 45;
+                        bullets_list.push_back(b);
+                    }
+                }
+        }
+/*
+        // check if bulltet coliision with zombi
+        for (Bullets *b : bullets_list)
+            for (Zombies *z : zombie_list)
+            {
+                if (b->Y == (z->Y + 112) && ((b->X - z->X) < 10))
+                {
+                    // delte bullet
+                    bullets_list.erase(find(bullets_list.begin(), bullets_list.end(), b));
+                    delete (b);
+                    z->lifescore -= 10;
+                    if (z->lifescore < 0)
+                    {
+                        // delete Zombi
+                        bullets_list.erase(find(bullets_list.begin(), bullets_list.end(), b));
+                        delete (b);
+                    }
+                }
+            }
+*/
         if (should_add_sun())
         {
             Sun *s = new Sun();
@@ -217,6 +293,20 @@ void Background::play()
                 GameOver = true;
             }
             window.draw(z->obj_Sprite);
+        }
+        for (Bullets *b : bullets_list)
+        {
+            b->next_frame();
+            b->obj_Sprite.setPosition(b->X, b->Y);
+            b->MoveX();
+            if (b->X < 10)
+            {
+                // delete b
+                bullets_list.erase(find(bullets_list.begin(), bullets_list.end(), b));
+                delete (b);
+            }
+            else
+                window.draw(b->obj_Sprite);
         }
         for (Greenplants *g : greenplants_list)
         {
